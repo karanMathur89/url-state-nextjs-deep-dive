@@ -1,19 +1,28 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
 
 const colorVariants = ["black", "white", "blue"]
 const sizeVariants = ["XS", "S", "MD", "L", "XL"]
 
-export default function WithUseStateExample() {
+export default function WithUseRouterExample() {
   //* STATES
   const [selectedColor, setSelectedColor] = useState(colorVariants[0])
   const [selectedSize, setSelectedSize] = useState(sizeVariants[2])
 
+  //* ROUTER
+  const router = useRouter()
+
+  //* USE EFFECT
+  useEffect(() => {
+    router.push(`/useRouter/?color=${selectedColor}&size=${selectedSize}`)
+  }, [selectedColor, selectedSize, router])
+
   return (
     <main>
-      <h1 className="mb-48 text-3xl font-bold">With useState</h1>
+      <h1 className="mb-48 text-3xl font-bold">With useRouter</h1>
       <section className="rounded bg-gray-100 p-4">
         <h2 className="mb-1 text-2xl font-bold">Snug T-shirt</h2>
         <span className="text inline-block rounded-full bg-blue-600 px-2 py-1 text-sm font-medium text-blue-50">

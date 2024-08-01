@@ -1,19 +1,23 @@
 "use client"
 
+import { z } from "zod"
+
 import { cn } from "@/lib/utils"
-import { useState } from "react"
+import Link from "next/link"
+import { useRouter, useSearchParams } from "next/navigation"
 
 const colorVariants = ["black", "white", "blue"]
-const sizeVariants = ["XS", "S", "MD", "L", "XL"]
+const sizeVariants = ["xs", "s", "md", "l", "xl"]
 
-export default function WithUseStateExample() {
-  //* STATES
-  const [selectedColor, setSelectedColor] = useState(colorVariants[0])
-  const [selectedSize, setSelectedSize] = useState(sizeVariants[2])
+export default function WithUseSearchParamsExample() {
+  //* URL STATE
+  const searchParams = useSearchParams()
+  const selectedColor = searchParams.get("color") || "blue"
+  const selectedSize = searchParams.get("size") || "md"
 
   return (
     <main>
-      <h1 className="mb-48 text-3xl font-bold">With useState</h1>
+      <h1 className="mb-48 text-3xl font-bold">With useSearchParams</h1>
       <section className="rounded bg-gray-100 p-4">
         <h2 className="mb-1 text-2xl font-bold">Snug T-shirt</h2>
         <span className="text inline-block rounded-full bg-blue-600 px-2 py-1 text-sm font-medium text-blue-50">
@@ -36,15 +40,15 @@ export default function WithUseStateExample() {
               <ul className="flex flex-wrap gap-2">
                 {colorVariants.map((color) => (
                   <li key={color}>
-                    <button
-                      onClick={() => setSelectedColor(color)}
+                    <Link
+                      href={`?color=${color}&size=${selectedSize}`}
                       className={cn([
                         "rounded-full border-2 border-gray-300 bg-gray-50 px-3 py-1 capitalize hover:bg-white",
                         { "border-blue-600": color === selectedColor },
                       ])}
                     >
                       {color}
-                    </button>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -54,15 +58,15 @@ export default function WithUseStateExample() {
               <ul className="flex flex-wrap gap-2">
                 {sizeVariants.map((size) => (
                   <li key={size}>
-                    <button
-                      onClick={() => setSelectedSize(size)}
+                    <Link
+                      href={`?color=${selectedColor}&size=${size}`}
                       className={cn([
                         "min-w-[5ch] rounded-full border-2 border-gray-300 bg-gray-50 px-3 py-1 uppercase hover:bg-white",
                         { "border-blue-600": size === selectedSize },
                       ])}
                     >
                       {size}
-                    </button>
+                    </Link>
                   </li>
                 ))}
               </ul>
