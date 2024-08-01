@@ -4,16 +4,31 @@ import { z } from "zod"
 
 import { cn } from "@/lib/utils"
 import Link from "next/link"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 
-const colorVariants = ["black", "white", "blue"]
-const sizeVariants = ["xs", "s", "md", "l", "xl"]
+//? Colors Schema
+const colorVariants = ["black", "white", "blue"] as const
+const DEFAULT_COLOR = colorVariants[0]
+const ColorEnum = z.enum(colorVariants)
+
+//? Sizes Schema
+const sizeVariants = ["xs", "s", "md", "l", "xl"] as const
+const DEFAULT_SIZE = sizeVariants[2]
+const SizeEnum = z.enum(sizeVariants)
 
 export default function WithUseSearchParamsExample() {
-  //* URL STATE
   const searchParams = useSearchParams()
-  const selectedColor = searchParams.get("color") || "blue"
-  const selectedSize = searchParams.get("size") || "md"
+
+  //* URL STATE
+  //? if user manually changes color param to an invalid value, use DEFAULT_COLOR
+  const paramColor = searchParams.get("color")
+  const parsedColor = ColorEnum.safeParse(paramColor)
+  const selectedColor = parsedColor.success ? parsedColor.data : DEFAULT_COLOR
+
+  //? if user manually changes size param to an invalid value, use DEFAULT_SIZE
+  const paramSize = searchParams.get("size")
+  const parsedSize = SizeEnum.safeParse(paramSize)
+  const selectedSize = parsedSize.success ? parsedSize.data : DEFAULT_SIZE
 
   return (
     <main>
@@ -74,6 +89,20 @@ export default function WithUseSearchParamsExample() {
           </div>
         </div>
       </section>
+      <Features />
     </main>
+  )
+}
+
+function Features() {
+  return (
+    <section className="mt-48 rounded border border-current bg-emerald-100/20 p-4 text-emerald-700">
+      <h2 className="mb-4 text-2xl font-semibold">Features</h2>
+      <ul className="list-inside list-disc space-y-4">
+        <li>
+          If the user manually changes the params, switch to a default value.
+        </li>
+      </ul>
+    </section>
   )
 }
