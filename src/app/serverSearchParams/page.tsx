@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils"
 import Link from "next/link"
 
 //? Colors Schema
-const colorVariants = ["black red", "white:fall", "blue"] as const
+const colorVariants = ["black obsidian", "white:fall", "blue"] as const
 const DEFAULT_COLOR = colorVariants[0]
 const ColorEnum = z.enum(colorVariants)
 
@@ -46,7 +46,7 @@ export default function WithServerSearchParamsExample({
             <div
               className={cn([
                 "mx-auto aspect-square w-1/2 rounded outline outline-offset-4",
-                { "bg-black": selectedColor === "black red" },
+                { "bg-black": selectedColor === "black obsidian" },
                 { "bg-white": selectedColor === "white:fall" },
                 { "bg-blue-600 outline-blue-600": selectedColor === "blue" },
               ])}
@@ -101,7 +101,7 @@ export default function WithServerSearchParamsExample({
           </div>
         </div>
       </section>
-      {/* <Features /> */}
+      <Features />
     </main>
   )
 }
@@ -114,6 +114,7 @@ function Features() {
         <li>
           If the user manually changes the params, switch to a default value.
         </li>
+        <li>The param values are URL encoded using URLSearchParams.</li>
       </ul>
     </section>
   )

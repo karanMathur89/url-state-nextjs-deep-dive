@@ -100,7 +100,7 @@ export default function WithUseSearchParamsExample() {
           </div>
         </div>
       </section>
-      {/* <Features /> */}
+      <Features />
     </main>
   )
 }
@@ -113,6 +113,7 @@ function Features() {
         <li>
           If the user manually changes the params, switch to a default value.
         </li>
+        <li>The param values are URL encoded using URLSearchParams.</li>
       </ul>
     </section>
   )
