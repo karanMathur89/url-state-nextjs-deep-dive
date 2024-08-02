@@ -1,13 +1,10 @@
-"use client"
-
 import { z } from "zod"
 
 import { cn } from "@/lib/utils"
 import Link from "next/link"
-import { useSearchParams } from "next/navigation"
 
 //? Colors Schema
-const colorVariants = ["black", "white:fall", "blue"] as const
+const colorVariants = ["black red", "white:fall", "blue"] as const
 const DEFAULT_COLOR = colorVariants[0]
 const ColorEnum = z.enum(colorVariants)
 
@@ -16,23 +13,27 @@ const sizeVariants = ["xs", "s", "md", "l", "xl"] as const
 const DEFAULT_SIZE = sizeVariants[2]
 const SizeEnum = z.enum(sizeVariants)
 
-export default function WithUseSearchParamsExample() {
-  const searchParams = useSearchParams()
-
+export default function WithServerSearchParamsExample({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined }
+}) {
   //* URL STATE
   //? if user manually changes color param to an invalid value, use DEFAULT_COLOR
-  const paramColor = searchParams.get("color")
+  const paramColor = searchParams.color
   const parsedColor = ColorEnum.safeParse(paramColor)
   const selectedColor = parsedColor.success ? parsedColor.data : DEFAULT_COLOR
 
   //? if user manually changes size param to an invalid value, use DEFAULT_SIZE
-  const paramSize = searchParams.get("size")
+  const paramSize = searchParams.size
   const parsedSize = SizeEnum.safeParse(paramSize)
   const selectedSize = parsedSize.success ? parsedSize.data : DEFAULT_SIZE
 
   return (
     <main>
-      <h1 className="mb-48 text-3xl font-bold">With useSearchParams</h1>
+      <h1 className="mb-48 text-balance text-3xl font-bold">
+        With searchParams in a Server component
+      </h1>
       <section className="rounded bg-gray-100 p-4">
         <h2 className="mb-1 text-2xl font-semibold tracking-tighter">
           Snug T-shirt
@@ -45,7 +46,7 @@ export default function WithUseSearchParamsExample() {
             <div
               className={cn([
                 "mx-auto aspect-square w-1/2 rounded outline outline-offset-4",
-                { "bg-black": selectedColor === "black" },
+                { "bg-black": selectedColor === "black red" },
                 { "bg-white": selectedColor === "white:fall" },
                 { "bg-blue-600 outline-blue-600": selectedColor === "blue" },
               ])}

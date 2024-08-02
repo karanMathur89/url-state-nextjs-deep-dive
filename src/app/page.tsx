@@ -15,7 +15,9 @@ export default function WithUseStateExample() {
     <main>
       <h1 className="mb-48 text-3xl font-bold">With useState</h1>
       <section className="rounded bg-gray-100 p-4">
-        <h2 className="mb-1 text-2xl font-bold">Snug T-shirt</h2>
+        <h2 className="mb-1 text-2xl font-semibold tracking-tighter">
+          Snug T-shirt
+        </h2>
         <span className="text inline-block rounded-full bg-blue-600 px-2 py-1 text-sm font-medium text-blue-50">
           $20.00
         </span>
